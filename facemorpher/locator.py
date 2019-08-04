@@ -65,29 +65,6 @@ def face_points_dlib(img, add_boundary_points=True):
     print(e)
     return []
 
-def face_points_stasm(img, add_boundary_points=True):
-  import stasm
-  """ Locates 77 face points using stasm (http://www.milbo.users.sonic.net/stasm)
-
-  :param img: an image array
-  :param add_boundary_points: bool to add 2 additional points
-  :returns: Array of x,y face points. Empty array if no face found
-  """
-  try:
-    points = stasm.search_single(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY))
-  except Exception as e:
-    print('Failed finding face points: ', e)
-    return []
-
-  points = points.astype(np.int32)
-  if len(points) == 0:
-    return points
-
-  if add_boundary_points:
-    return np.vstack([points, boundary_points(points)])
-
-  return points
-
 def average_points(point_set):
   """ Averages a set of face points from images
 
